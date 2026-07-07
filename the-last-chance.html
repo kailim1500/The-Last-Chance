@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Last Chance — Every Life Deserves One Last Chance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #1b1712;
+    --bg-alt: #221b14;
+    --bg-panel: #2a2118;
+    --ink: #f2ece1;
+    --ink-dim: #a89d8d;
+    --ink-faint: #6f6555;
+    --amber: #e8a33d;
+    --amber-dim: #b97f2c;
+    --teal: #5c9484;
+    --rope: #5a4632;
+    --rule: rgba(242,236,225,0.09);
+    --max: 1100px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  ::selection{background:var(--amber); color:#1b1712;}
+
+  :focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:3px;
+  }
+
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 24px;}
+  section{padding:96px 0;}
+  @media (max-width:720px){ section{padding:64px 0;} }
+
+  /* ---------- Rescue tag signature element ---------- */
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--amber);
+    padding:6px 14px 6px 10px;
+    border:1px solid var(--amber-dim);
+    border-radius:100px;
+    background:rgba(232,163,61,0.06);
+  }
+  .tag::before{
+    content:'';
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--bg);
+    border:1.5px solid var(--amber);
+    flex-shrink:0;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(27,23,18,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  .topbar .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+  }
+  .wordmark{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:0.01em;
+  }
+  .topbar nav a{
+    font-size:14px;
+    text-decoration:none;
+    color:var(--ink-dim);
+    margin-left:24px;
+  }
+  .topbar nav a:hover{color:var(--amber);}
+  .topbar nav{display:flex; align-items:center;}
+  @media (max-width:640px){
+    .topbar nav a:not(.btn-small){display:none;}
+  }
+  .btn-small{
+    border:1px solid var(--amber-dim) !important;
+    padding:8px 16px;
+    border-radius:100px;
+    color:var(--amber) !important;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:120px 0 100px;
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(232,163,61,0.13), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(92,148,132,0.10), transparent 55%);
+  }
+  .hero .tag{margin-bottom:28px;}
+  .hero h1{
+    font-size:clamp(42px, 8vw, 84px);
+    line-height:0.98;
+    color:var(--ink);
+  }
+  .hero h1 .accent{color:var(--amber);}
+  .hero p.lede{
+    font-size:clamp(18px, 2.4vw, 22px);
+    color:var(--ink-dim);
+    max-width:520px;
+    margin:24px 0 40px;
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-style:italic;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:14px 26px;
+    border-radius:100px;
+    font-size:15px;
+    font-weight:600;
+    text-decoration:none;
+    border:1px solid transparent;
+    transition:transform 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--amber); color:#1b1712;}
+  .btn-primary:hover{background:#f0b258;}
+  .btn-ghost{border-color:var(--rule); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--amber-dim); color:var(--amber);}
+
+  /* punch-hole divider between hero and content, like a tag corner */
+  .perf{
+    display:flex; justify-content:center; gap:10px;
+    padding:36px 0 0;
+  }
+  .perf span{width:5px; height:5px; border-radius:50%; background:var(--rule);}
+
+  /* ---------- Section heads ---------- */
+  .head{margin-bottom:36px;}
+  .head h2{font-size:clamp(28px, 4vw, 38px); margin-top:10px;}
+  .head .tag{margin-bottom:0;}
+
+  /* ---------- About ---------- */
+  .about p{
+    color:var(--ink-dim);
+    font-size:17px;
+    max-width:680px;
+    margin:0 0 18px;
+  }
+  .about p:last-child{margin-bottom:0;}
+  .about strong{color:var(--ink); font-weight:600;}
+
+  /* ---------- Campaign card ---------- */
+  .campaign-card{
+    background:var(--bg-panel);
+    border:1px solid var(--rule);
+    border-radius:20px;
+    padding:40px;
+    position:relative;
+  }
+  .campaign-card::before{
+    content:'';
+    position:absolute;
+    top:28px; right:28px;
+    width:14px; height:14px;
+    border-radius:50%;
+    border:2px solid var(--rope);
+  }
+  @media (max-width:640px){ .campaign-card{padding:28px 24px;} }
+  .campaign-card h3{
+    font-size:clamp(22px, 3.4vw, 30px);
+    line-height:1.2;
+    max-width:80%;
+    margin-bottom:24px;
+  }
+  .campaign-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:32px;
+    margin-top:8px;
+  }
+  @media (max-width:720px){ .campaign-grid{grid-template-columns:1fr;} }
+  .campaign-grid p{color:var(--ink-dim); font-size:15.5px; margin:0;}
+  .meta-list{display:flex; flex-direction:column; gap:20px;}
+  .meta-item{border-left:2px solid var(--amber-dim); padding-left:16px;}
+  .meta-item .k{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    display:block;
+    margin-bottom:4px;
+  }
+  .meta-item .v{font-size:15px; color:var(--ink);}
+
+  /* ---------- Transparency (ledger / stamp) ---------- */
+  .ledger{
+    border:1px solid var(--rule);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .ledger-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 28px;
+    border-bottom:1px dashed var(--rule);
+    position:relative;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .ledger-row:last-child{border-bottom:none;}
+  .ledger-row .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    color:var(--ink);
+  }
+  .ledger-row .label small{
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    color:var(--ink-faint);
+    margin-top:4px;
+  }
+  .stamp{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    border:1.5px solid var(--teal);
+    border-radius:6px;
+    padding:5px 12px;
+    transform:rotate(-3deg);
+    white-space:nowrap;
+    opacity:0.85;
+  }
+
+  /* ---------- Founder Vision ---------- */
+  .vision{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:40px;
+    align-items:center;
+    background:linear-gradient(135deg, rgba(232,163,61,0.07), transparent 60%);
+    border:1px solid var(--rule);
+    border-radius:20px;
+    padding:44px;
+  }
+  @media (max-width:720px){
+    .vision{grid-template-columns:1fr; padding:32px 24px;}
+  }
+  .vision p{color:var(--ink-dim); font-size:16.5px; max-width:560px; margin:0 0 14px;}
+  .vision p:last-of-type{margin-bottom:0;}
+  .vision .signoff{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    color:var(--ink-faint);
+    margin-top:18px;
+    font-size:15px;
+  }
+
+  /* ---------- Roadmap ---------- */
+  .roadmap{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+    position:relative;
+  }
+  @media (max-width:820px){ .roadmap{grid-template-columns:1fr;} }
+  .phase{
+    background:var(--bg-panel);
+    border:1px solid var(--rule);
+    border-radius:16px;
+    padding:28px 26px;
+    position:relative;
+  }
+  .phase .tag{margin-bottom:16px; font-size:11px;}
+  .phase h3{font-size:19px; margin-bottom:10px;}
+  .phase p{color:var(--ink-dim); font-size:14.5px; margin:0;}
+
+  /* ---------- Community ---------- */
+  .community{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .comm-card{
+    flex:1 1 200px;
+    border:1px solid var(--rule);
+    border-radius:16px;
+    padding:24px;
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    transition:border-color 0.15s ease, transform 0.15s ease;
+  }
+  .comm-card:hover{border-color:var(--amber-dim); transform:translateY(-2px);}
+  .comm-card .k{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .comm-card .v{font-size:17px; font-weight:600; color:var(--ink);}
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--rule);
+    padding:36px 0;
+  }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  footer .fine{color:var(--ink-faint); font-size:13.5px;}
+  footer nav a{
+    color:var(--ink-faint);
+    text-decoration:none;
+    font-size:13.5px;
+    margin-left:20px;
+  }
+  footer nav a:hover{color:var(--amber);}
+
+  /* scroll reveal */
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="wordmark">The Last Chance</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#campaign">Campaign</a>
+      <a href="#transparency">Transparency</a>
+      <a href="#" class="btn-small">Join Discord</a>
+    </nav>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="tag">Web3 Charity Platform</span>
+    <h1>The Last<br>Chance<span class="accent">.</span></h1>
+    <p class="lede">Every life deserves one last chance.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary">Join Discord</a>
+      <a href="#" class="btn btn-ghost">Follow on X</a>
+    </div>
+  </div>
+  <div class="perf"><span></span><span></span><span></span><span></span><span></span></div>
+</section>
+
+<section id="about" class="about reveal">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">01 — About</span>
+      <h2>What is The Last Chance?</h2>
+    </div>
+    <p>The Last Chance is a Web3 platform built for one purpose: turning NFT mints into direct, trackable donations for causes that rarely get funded in time.</p>
+    <p>We don't run one campaign forever. Each campaign has a start, a confirmed foundation partner on the ground, a funding goal, and an end — followed by a full public report of where every dollar went.</p>
+    <p>Our first campaign, <strong>Maggot Rescue</strong>, funds emergency treatment for street dogs suffering from untreated wounds and infections, in partnership with a confirmed local foundation.</p>
+  </div>
+</section>
+
+<section id="campaign" class="reveal">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">02 — Current Campaign</span>
+      <h2>Campaign 01</h2>
+    </div>
+    <div class="campaign-card">
+      <h3>Giving Forgotten Street Dogs a Second Chance at Life</h3>
+      <div class="campaign-grid">
+        <p>Every day, street dogs suffer from open wounds, maggot infestations, and infections that go untreated simply because no one steps in first. Maggot Rescue funds the emergency medical care that changes that outcome — antiseptic treatment, wound care, and recovery support for dogs who would otherwise be left to die on the street.</p>
+        <div class="meta-list">
+          <div class="meta-item">
+            <span class="k">Foundation</span>
+            <span class="v">Dharamsala Animal Rescue — confirmed ground partner</span>
+          </div>
+          <div class="meta-item">
+            <span class="k">Goal</span>
+            <span class="v">Full funding breakdown published at mint</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="transparency" class="reveal">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">03 — Transparency</span>
+      <h2>Nothing hidden, everything checkable</h2>
+    </div>
+    <div class="ledger">
+      <div class="ledger-row">
+        <span class="label">Public Wallet<small>The address every mint and donation moves through</small></span>
+        <span class="stamp">Coming Soon</span>
+      </div>
+      <div class="ledger-row">
+        <span class="label">Foundation Confirmation<small>Signed confirmation from our ground partner</small></span>
+        <span class="stamp">Coming Soon</span>
+      </div>
+      <div class="ledger-row">
+        <span class="label">Donation Report<small>Where every dollar raised actually went</small></span>
+        <span class="stamp">Coming Soon</span>
+      </div>
+      <div class="ledger-row">
+        <span class="label">Campaign Report<small>Full outcome summary after the campaign closes</small></span>
+        <span class="stamp">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vision" class="reveal">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">04 — Founder Vision</span>
+      <h2>Why this exists</h2>
+    </div>
+    <div class="vision">
+      <div>
+        <p>The Last Chance started from a simple frustration: watching charity campaigns raise money with no real way to verify where it went. This platform exists to fix that — every mint, every wallet movement, and every report will be public, permanent, and checkable by anyone.</p>
+        <p>I'm not taking a cut from this first campaign. The goal is to prove the model works before asking anyone to trust it with more.</p>
+        <p class="signoff">— Kai Lim, Founder</p>
+      </div>
+      <a href="#" class="btn btn-primary">Read Full Vision</a>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap" class="reveal">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">05 — Roadmap</span>
+      <h2>Where we're headed</h2>
+    </div>
+    <div class="roadmap">
+      <div class="phase">
+        <span class="tag">Phase 1</span>
+        <h3>Foundation & Trust</h3>
+        <p>Confirm ground partner, launch the Discord community, publish the full transparency framework.</p>
+      </div>
+      <div class="phase">
+        <span class="tag">Phase 2</span>
+        <h3>Mint & Fund</h3>
+        <p>Open the Maggot Rescue mint and route funds directly to Dharamsala Animal Rescue.</p>
+      </div>
+      <div class="phase">
+        <span class="tag">Phase 3</span>
+        <h3>Report & Expand</h3>
+        <p>Publish the full donation report and open the platform to future campaigns.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="community" class="reveal">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag">06 — Community</span>
+      <h2>Follow along</h2>
+    </div>
+    <div class="community">
+      <a class="comm-card" href="#">
+        <span class="k">Discord</span>
+        <span class="v">Join the server →</span>
+      </a>
+      <a class="comm-card" href="#">
+        <span class="k">X / Twitter</span>
+        <span class="v">Follow updates →</span>
+      </a>
+      <a class="comm-card" href="mailto:nrraihan391@gmail.com">
+        <span class="k">Email</span>
+        <span class="v">nrraihan391@gmail.com</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="fine">© 2026 The Last Chance. All rights reserved.</span>
+    <nav>
+      <a href="#">Privacy</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
